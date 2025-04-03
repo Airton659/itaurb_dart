@@ -5,6 +5,8 @@ import '../services/notification_service.dart';
 import 'bairro_detail_screen.dart';
 
 class NeighborhoodsScreen extends StatefulWidget {
+  const NeighborhoodsScreen({super.key});
+
   @override
   _NeighborhoodsScreenState createState() => _NeighborhoodsScreenState();
 }

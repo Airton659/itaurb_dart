@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactScreen extends StatefulWidget {
+  const ContactScreen({super.key});
+
   @override
   _ContactScreenState createState() => _ContactScreenState();
 }
@@ -12,12 +14,16 @@ class _ContactScreenState extends State<ContactScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _messageController = TextEditingController();
+  // Novos controllers para campos de endereço
+  final TextEditingController _bairroController = TextEditingController();
+  final TextEditingController _ruaController = TextEditingController();
+  final TextEditingController _numeroController = TextEditingController();
 
   String _selectedService = '';
   final List<Map<String, String>> _serviceTypes = [
     {'label': 'Selecione o tipo de serviço', 'value': ''},
-    {'label': 'Reclamação', 'value': 'reclamacao'},
-    {'label': 'Coleta Especial', 'value': 'coleta_especial'},
+    {'label': 'Sugestão', 'value': 'reclamacao'},
+    // {'label': 'Coleta Especial', 'value': 'coleta_especial'},
     {'label': 'Lixo não recolhido', 'value': 'lixo_nao_recolhido'},
     {'label': 'Animal Morto', 'value': 'animal_morto'},
     {'label': 'Dúvida', 'value': 'duvida'},
@@ -75,6 +81,11 @@ void _formatPhoneNumber(String text) {
 📱 *Telefone:* ${_phoneController.text}
 ${_emailController.text.isNotEmpty ? '📧 *E-mail:* ${_emailController.text}\n' : ''}
 🔧 *Tipo de Serviço:* ${_serviceTypes.firstWhere((t) => t['value'] == _selectedService)['label']}
+
+📍 *Endereço:*
+Bairro: ${_bairroController.text}
+${_ruaController.text.isNotEmpty ? 'Rua: ${_ruaController.text}\n' : ''}
+${_numeroController.text.isNotEmpty ? 'Número: ${_numeroController.text}\n' : ''}
 
 📝 *Mensagem:*
 ${_messageController.text}
@@ -236,6 +247,68 @@ ${_messageController.text}
                       },
                     ),
                     SizedBox(height: 16),
+                    // Seção de endereço
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade50,
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.grey.shade300),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(Icons.location_on, color: Colors.green),
+                              SizedBox(width: 8),
+                              Text(
+                                'Endereço',
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 12),
+                          TextFormField(
+                            controller: _bairroController,
+                            decoration: InputDecoration(
+                              labelText: 'Bairro *',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            ),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Por favor, informe o bairro';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: 12),
+                          TextFormField(
+                            controller: _ruaController,
+                            decoration: InputDecoration(
+                              labelText: 'Rua',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            ),
+                          ),
+                          SizedBox(height: 12),
+                          TextFormField(
+                            controller: _numeroController,
+                            decoration: InputDecoration(
+                              labelText: 'Número',
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                            ),
+                            keyboardType: TextInputType.number,
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
                     DropdownButtonFormField<String>(
                       value: _selectedService,
                       decoration: InputDecoration(
@@ -313,21 +386,21 @@ ${_messageController.text}
                   _buildContactItem(
                     icon: Icons.phone,
                     title: 'Telefone',
-                    content: '(00) 1234-5678',
-                    onTap: () => _launchUrl('tel:0012345678'),
+                    content: '(31) 3833-4010',
+                    onTap: () => _launchUrl('tel:3138334010'),
                   ),
                   Divider(),
                   _buildContactItem(
                     icon: Icons.email_outlined,
                     title: 'E-mail',
-                    content: 'contato@coletadelixo.com',
-                    onTap: () => _launchUrl('mailto:contato@coletadelixo.com'),
+                    content: 'itaurb.oficial@itaurb.com.br',
+                    onTap: () => _launchUrl('mailto:itaurb.oficial@itaurb.com.br'),
                   ),
                   Divider(),
                   _buildContactItem(
                     icon: Icons.location_on,
                     title: 'Endereço',
-                    content: 'Av. Principal, 123 - Centro',
+                    content: 'Av. Carlos Drummond de Andrade, 50 - Centro',
                     onTap: () => _launchUrl('https://maps.google.com'),
                   ),
                 ],

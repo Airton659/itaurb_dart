@@ -16,6 +16,8 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,6 +34,8 @@ class MyApp extends StatelessWidget {
 }
 
 class MainScreen extends StatefulWidget {
+  const MainScreen({super.key});
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -78,7 +82,7 @@ class _MainScreenState extends State<MainScreen> {
           NeighborhoodsScreen(), // Índice 0 (Bairros)
           WelcomeScreen(),       // Índice 1 (Início)
           ContactScreen(),      // Índice 2 (Contato)
-        ],
+        ], 
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
